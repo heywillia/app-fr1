@@ -5,10 +5,12 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 import uuid
+import json
 
-# --- AUTENTICACIÓN GOOGLE SHEETS ---
+# --- AUTENTICACIÓN GOOGLE SHEETS desde SECRETO ---
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credenciales.json", scope)
+creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 
 # --- ACCEDER A LA HOJA ---
